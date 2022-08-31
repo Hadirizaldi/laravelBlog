@@ -33,7 +33,7 @@
 
         <div class="sm:grid grid-cols-2 gap-20 w-4/5 mx-auto py-15 border-b border-gray-200">
             <div>
-                <img src="https://cdn.pixabay.com/photo/2015/01/08/18/25/desk-593327_960_720.jpg" alt="">
+                <img src="{{ asset('images/'. $post->image_path) }}" alt="">
             </div>
             <div>
                 <h2 class="text-gray-700 font-bold text-5xl pb-4">
@@ -54,7 +54,7 @@
                 </a>
 
 
-                {{-- for update --}}
+                {{-- for update and delete --}}
                 @if (isset(Auth::user()->id) && Auth::user()->id == $post->user_id)
                     <span class="float-right">
                         <a 
@@ -63,6 +63,23 @@
                             Edit
                         </a>
                     </span>
+
+                    <span class="float-right">
+                        <form 
+                           action="/blog/{{ $post->slug }}"
+                           method="POST">
+                           @csrf
+                           @method('delete')
+   
+                           <button
+                               class="text-red-500 pr-3"
+                               type="submit">
+                               Delete
+                           </button>
+   
+                       </form>
+                   </span>
+
                 @endif
             </div>
         </div>
